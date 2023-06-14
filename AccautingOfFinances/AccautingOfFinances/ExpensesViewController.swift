@@ -10,12 +10,19 @@ import SnapKit
 
 class ExpensesViewController: UIViewController {
 
+    let uiView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 20
+        view.backgroundColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 0.2)
+//        view.backgroundColor = .gray
+        return view
+    }()
     let enterLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
-        label.backgroundColor = .brown
+        label.font = .systemFont(ofSize: 30, weight: .bold)
         label.textColor = .white
-        label.textAlignment = .center
+        label.textAlignment = .right
         return label
     }()
     
@@ -139,6 +146,15 @@ class ExpensesViewController: UIViewController {
         label.font = .systemFont(ofSize: 24, weight: .semibold)
         return label
     }()
+    let limitButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Установить лимит", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.backgroundColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 0.2)
+//        button.backgroundColor = UIColor.systemGray
+        return button
+    }()
     let expensesLabel: UILabel = {
         let label = UILabel()
         label.text = "Все расходы:"
@@ -162,12 +178,12 @@ class ExpensesViewController: UIViewController {
         var fill = UIButton.Configuration.filled()
         fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
             var hui = income
-            hui.font = UIFont.systemFont(ofSize: 5)
+            hui.font = UIFont.systemFont(ofSize: 15)
             return hui
         })
         fill.imagePlacement = .top
         fill.imagePadding = 5
-        fill.baseBackgroundColor = .blue
+        fill.baseBackgroundColor = .clear
         button.configuration = fill
         return button
     }()
@@ -177,6 +193,11 @@ class ExpensesViewController: UIViewController {
         button.setTitle("Кальян", for: .normal)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
+        fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
+            var hui = income
+            hui.font = UIFont.systemFont(ofSize: 15)
+            return hui
+        })
         fill.imagePadding = 5
         fill.baseBackgroundColor = .clear
         button.configuration = fill
@@ -188,6 +209,11 @@ class ExpensesViewController: UIViewController {
         button.setTitle("Уход", for: .normal)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
+        fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
+            var hui = income
+            hui.font = UIFont.systemFont(ofSize: 15)
+            return hui
+        })
         fill.imagePadding = 5
         fill.baseBackgroundColor = .clear
         button.configuration = fill
@@ -199,6 +225,11 @@ class ExpensesViewController: UIViewController {
         button.setTitle("Авто", for: .normal)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
+        fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
+            var hui = income
+            hui.font = UIFont.systemFont(ofSize: 15)
+            return hui
+        })
         fill.imagePadding = 10
         fill.baseBackgroundColor = .clear
         button.configuration = fill
@@ -207,9 +238,30 @@ class ExpensesViewController: UIViewController {
     let gkuButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "gku"), for: .normal)
-        button.setTitle("Кальян", for: .normal)
+        button.setTitle("ЖКУ", for: .normal)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
+        fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
+            var hui = income
+            hui.font = UIFont.systemFont(ofSize: 15)
+            return hui
+        })
+        fill.imagePadding = 7
+        fill.baseBackgroundColor = .clear
+        button.configuration = fill
+        return button
+    }()
+    let dosugButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "dosug"), for: .normal)
+        button.setTitle("Досуг", for: .normal)
+        var fill = UIButton.Configuration.filled()
+        fill.imagePlacement = .top
+        fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
+            var hui = income
+            hui.font = UIFont.systemFont(ofSize: 15)
+            return hui
+        })
         fill.imagePadding = 7
         fill.baseBackgroundColor = .clear
         button.configuration = fill
@@ -242,12 +294,18 @@ class ExpensesViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.title = "Путь к миллиону"
         view.backgroundColor = .black
-        
-        view.addSubview(enterLabel)
-        enterLabel.snp.makeConstraints { make in
+        view.addSubview(uiView)
+        uiView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(UIConstant.topEnterLabInset)
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
+            make.width.equalTo(320)
+            make.height.equalTo(UIConstant.heightEnterLabel)
+        }
+        uiView.addSubview(enterLabel)
+        enterLabel.snp.makeConstraints { make in
+//            make.top.equalToSuperview().inset(UIConstant.topEnterLabInset)
+            make.center.equalToSuperview()
+            make.width.equalTo(300)
             make.height.equalTo(UIConstant.heightEnterLabel)
         }
         oneButton.snp.makeConstraints { make in
@@ -359,6 +417,12 @@ class ExpensesViewController: UIViewController {
             make.leading.equalToSuperview().inset(UIConstant.labelInset)
             make.top.equalTo(availableStack.snp.bottom).offset(UIConstant.topLabelInset)
         }
+        view.addSubview(limitButton)
+        limitButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(30)
+            make.top.equalTo(cancelButton.snp.bottom).offset(10)
+            make.width.equalTo(175)
+        }
         let expensesStack = UIStackView()
         expensesStack.axis = .vertical
         expensesStack.spacing = 8
@@ -369,18 +433,19 @@ class ExpensesViewController: UIViewController {
             make.leading.equalToSuperview().inset(UIConstant.labelInset)
             make.top.equalTo(wastesStack.snp.bottom).offset(UIConstant.topExpenseesInset)
         }
-        eatButton.snp.makeConstraints { make in
-            make.width.equalTo(75)
-//            make.height.equalTo(70)
-        }
+//        eatButton.snp.makeConstraints { make in
+//            make.width.equalTo(75)
+////            make.height.equalTo(70)
+//        }
       let buttonCategoryStack = UIStackView()
         buttonCategoryStack.axis = .horizontal
-        buttonCategoryStack.spacing = -20
+        buttonCategoryStack.spacing = -12
         buttonCategoryStack.addArrangedSubview(eatButton)
         buttonCategoryStack.addArrangedSubview(hookahButton)
         buttonCategoryStack.addArrangedSubview(barberButton)
         buttonCategoryStack.addArrangedSubview(avtoButton)
         buttonCategoryStack.addArrangedSubview(gkuButton)
+        buttonCategoryStack.addArrangedSubview(dosugButton)
         view.addSubview(buttonCategoryStack)
         buttonCategoryStack.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(UIConstant.buttonCategorylInset)

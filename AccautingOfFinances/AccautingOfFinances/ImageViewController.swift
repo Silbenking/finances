@@ -39,7 +39,7 @@ class ImageViewController: UIViewController {
            
             if let data = try? Data(contentsOf: imageURL){
                 DispatchQueue.main.async {
-                    self.image.image = UIImage(data: data)
+                    self.image.image = UIImage(data: data )
                 }
             }
         }

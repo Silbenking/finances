@@ -16,6 +16,7 @@
 		A273FA252A309F61004474A4 /* IncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA242A309F61004474A4 /* IncomeViewController.swift */; };
 		A273FA272A309F6E004474A4 /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA262A309F6E004474A4 /* StatisticViewController.swift */; };
 		A273FA2A2A38AEFD004474A4 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA292A38AEFD004474A4 /* ImageViewController.swift */; };
+		A2BB99152A39B9C20023C35D /* asyncAfter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BB99142A39B9C20023C35D /* asyncAfter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A273FA242A309F61004474A4 /* IncomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeViewController.swift; sourceTree = "<group>"; };
 		A273FA262A309F6E004474A4 /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
 		A273FA292A38AEFD004474A4 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		A2BB99142A39B9C20023C35D /* asyncAfter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = asyncAfter.swift; sourceTree = "<group>"; };
 		A536B2966CD6BD01A66580B2 /* Pods-AccautingOfFinances.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccautingOfFinances.debug.xcconfig"; path = "Target Support Files/Pods-AccautingOfFinances/Pods-AccautingOfFinances.debug.xcconfig"; sourceTree = "<group>"; };
 		DBC3CB2E0DC47EAFB2144733 /* Pods_AccautingOfFinances.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccautingOfFinances.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 			children = (
 				A273FA262A309F6E004474A4 /* StatisticViewController.swift */,
 				A273FA292A38AEFD004474A4 /* ImageViewController.swift */,
+				A2BB99142A39B9C20023C35D /* asyncAfter.swift */,
 			);
 			name = GCD;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				A273FA272A309F6E004474A4 /* StatisticViewController.swift in Sources */,
 				A273FA2A2A38AEFD004474A4 /* ImageViewController.swift in Sources */,
 				A273FA252A309F61004474A4 /* IncomeViewController.swift in Sources */,
+				A2BB99152A39B9C20023C35D /* asyncAfter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
