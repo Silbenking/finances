@@ -10,6 +10,7 @@ import SnapKit
 
 class ExpensesViewController: UIViewController {
 
+    var stillTyping = false
     let uiView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 20
@@ -30,77 +31,99 @@ class ExpensesViewController: UIViewController {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("1", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers(_:)), for: .touchUpInside)
         return button
     }()
     let twoButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("2", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers(_:)), for: .touchUpInside)
         return button
     }()
     let threeButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("3", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers(_:)), for: .touchUpInside)
         return button
     }()
     let fourButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("4", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers), for: .touchUpInside)
         return button
     }()
     let fiveButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("5", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers), for: .touchUpInside)
         return button
     }()
     let sixButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("6", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers), for: .touchUpInside)
         return button
     }()
     let sevenButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("7", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers), for: .touchUpInside)
         return button
     }()
     let eightButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("8", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers), for: .touchUpInside)
         return button
     }()
     let neghtButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("9", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers), for: .touchUpInside)
         return button
     }()
     let zeroButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("0", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(enteringnumbers), for: .touchUpInside)
         return button
     }()
     let cancelButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 8
         button.setTitle("Cancel", for: .normal)
+        button.setTitleColor(.gray, for: .highlighted)
         button.backgroundColor = .purple
+        button.addTarget(self, action: #selector(cancelNumbers), for: .touchUpInside)
         return button
     }()
     // создание лейблов
@@ -175,6 +198,7 @@ class ExpensesViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "eat"), for: .normal)
         button.setTitle("Еда", for: .normal)
+        button.addTarget(self, action: #selector(categoryPressed), for: .touchUpInside)
         var fill = UIButton.Configuration.filled()
         fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
             var hui = income
@@ -191,6 +215,7 @@ class ExpensesViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "hookah"), for: .normal)
         button.setTitle("Кальян", for: .normal)
+        button.addTarget(self, action: #selector(categoryPressed), for: .touchUpInside)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
         fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
@@ -207,6 +232,7 @@ class ExpensesViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "barber"), for: .normal)
         button.setTitle("Уход", for: .normal)
+        button.addTarget(self, action: #selector(categoryPressed), for: .touchUpInside)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
         fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
@@ -223,6 +249,7 @@ class ExpensesViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "car"), for: .normal)
         button.setTitle("Авто", for: .normal)
+        button.addTarget(self, action: #selector(categoryPressed), for: .touchUpInside)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
         fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
@@ -239,6 +266,7 @@ class ExpensesViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "gku"), for: .normal)
         button.setTitle("ЖКУ", for: .normal)
+        button.addTarget(self, action: #selector(categoryPressed), for: .touchUpInside)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
         fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
@@ -255,6 +283,7 @@ class ExpensesViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "dosug"), for: .normal)
         button.setTitle("Досуг", for: .normal)
+        button.addTarget(self, action: #selector(categoryPressed), for: .touchUpInside)
         var fill = UIButton.Configuration.filled()
         fill.imagePlacement = .top
         fill.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer({ income in
@@ -452,8 +481,22 @@ class ExpensesViewController: UIViewController {
             make.top.equalTo(expensesStack.snp.bottom).offset(UIConstant.buttonCategoryTopOffset)
         }
     }
-    
-    
-
+    @objc func enteringnumbers(_ number:UIButton){
+        let number = number.currentTitle
+        if stillTyping {
+            if let enterCount = enterLabel.text?.count, enterCount < 10 {
+                enterLabel.text = enterLabel.text! + (number ?? "nil")
+            } } else {
+                enterLabel.text = number
+                stillTyping = true
+            }
+        }
+    @objc func cancelNumbers(_ number:UIButton){
+        enterLabel.text = "0"
+        stillTyping = false
+    }
+    @objc func categoryPressed(_ category: UIButton){
+        
+    }
 }
 
