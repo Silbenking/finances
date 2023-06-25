@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		389D9FB149CA413A446066A9 /* Pods_AccautingOfFinances.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC3CB2E0DC47EAFB2144733 /* Pods_AccautingOfFinances.framework */; };
+		469335201B517B83B04EF115 /* Pods_AccautingOfFinances.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BFA95A04DC5D60B1213B135 /* Pods_AccautingOfFinances.framework */; };
 		A273FA112A30995D004474A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA102A30995D004474A4 /* AppDelegate.swift */; };
 		A273FA132A30995D004474A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA122A30995D004474A4 /* SceneDelegate.swift */; };
 		A273FA152A30995D004474A4 /* ExpensesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA142A30995D004474A4 /* ExpensesViewController.swift */; };
@@ -17,10 +17,14 @@
 		A273FA272A309F6E004474A4 /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA262A309F6E004474A4 /* StatisticViewController.swift */; };
 		A273FA2A2A38AEFD004474A4 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A273FA292A38AEFD004474A4 /* ImageViewController.swift */; };
 		A2BB99152A39B9C20023C35D /* asyncAfter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BB99142A39B9C20023C35D /* asyncAfter.swift */; };
+		A2BB99192A3CFC950023C35D /* FinanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BB99182A3CFC950023C35D /* FinanceCell.swift */; };
+		A2BB991B2A44805A0023C35D /* SpendingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BB991A2A44805A0023C35D /* SpendingModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		288D7CF0C46B2D0EA63DDA91 /* Pods-AccautingOfFinances.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccautingOfFinances.release.xcconfig"; path = "Target Support Files/Pods-AccautingOfFinances/Pods-AccautingOfFinances.release.xcconfig"; sourceTree = "<group>"; };
+		2914E9A5D0B2501A0A933ED8 /* Pods-AccautingOfFinances.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccautingOfFinances.debug.xcconfig"; path = "Target Support Files/Pods-AccautingOfFinances/Pods-AccautingOfFinances.debug.xcconfig"; sourceTree = "<group>"; };
+		3BFA95A04DC5D60B1213B135 /* Pods_AccautingOfFinances.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccautingOfFinances.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83C7E3BCCC06B50951217E7A /* Pods-AccautingOfFinances.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccautingOfFinances.release.xcconfig"; path = "Target Support Files/Pods-AccautingOfFinances/Pods-AccautingOfFinances.release.xcconfig"; sourceTree = "<group>"; };
 		A273FA0D2A30995D004474A4 /* AccautingOfFinances.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccautingOfFinances.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A273FA102A30995D004474A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A273FA122A30995D004474A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,8 +36,8 @@
 		A273FA262A309F6E004474A4 /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
 		A273FA292A38AEFD004474A4 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		A2BB99142A39B9C20023C35D /* asyncAfter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = asyncAfter.swift; sourceTree = "<group>"; };
-		A536B2966CD6BD01A66580B2 /* Pods-AccautingOfFinances.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccautingOfFinances.debug.xcconfig"; path = "Target Support Files/Pods-AccautingOfFinances/Pods-AccautingOfFinances.debug.xcconfig"; sourceTree = "<group>"; };
-		DBC3CB2E0DC47EAFB2144733 /* Pods_AccautingOfFinances.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccautingOfFinances.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2BB99182A3CFC950023C35D /* FinanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceCell.swift; sourceTree = "<group>"; };
+		A2BB991A2A44805A0023C35D /* SpendingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				389D9FB149CA413A446066A9 /* Pods_AccautingOfFinances.framework in Frameworks */,
+				469335201B517B83B04EF115 /* Pods_AccautingOfFinances.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,10 +55,18 @@
 		1816B4FABB8CC6A185CB24B2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A536B2966CD6BD01A66580B2 /* Pods-AccautingOfFinances.debug.xcconfig */,
-				288D7CF0C46B2D0EA63DDA91 /* Pods-AccautingOfFinances.release.xcconfig */,
+				2914E9A5D0B2501A0A933ED8 /* Pods-AccautingOfFinances.debug.xcconfig */,
+				83C7E3BCCC06B50951217E7A /* Pods-AccautingOfFinances.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		261457F8DA3BBFC4214CE0DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3BFA95A04DC5D60B1213B135 /* Pods_AccautingOfFinances.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A273FA042A30995D004474A4 = {
@@ -63,7 +75,7 @@
 				A273FA0F2A30995D004474A4 /* AccautingOfFinances */,
 				A273FA0E2A30995D004474A4 /* Products */,
 				1816B4FABB8CC6A185CB24B2 /* Pods */,
-				E0D726EF64C32E465832B027 /* Frameworks */,
+				261457F8DA3BBFC4214CE0DB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,6 +95,8 @@
 				A273FA242A309F61004474A4 /* IncomeViewController.swift */,
 				A273FA282A38AEDF004474A4 /* GCD */,
 				A273FA142A30995D004474A4 /* ExpensesViewController.swift */,
+				A2BB991A2A44805A0023C35D /* SpendingModel.swift */,
+				A2BB99182A3CFC950023C35D /* FinanceCell.swift */,
 				A273FA192A309960004474A4 /* Assets.xcassets */,
 				A273FA1B2A309960004474A4 /* LaunchScreen.storyboard */,
 				A273FA1E2A309960004474A4 /* Info.plist */,
@@ -100,14 +114,6 @@
 			name = GCD;
 			sourceTree = "<group>";
 		};
-		E0D726EF64C32E465832B027 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DBC3CB2E0DC47EAFB2144733 /* Pods_AccautingOfFinances.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -115,11 +121,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A273FA212A309960004474A4 /* Build configuration list for PBXNativeTarget "AccautingOfFinances" */;
 			buildPhases = (
-				0E6D5175AE093F9338CD9862 /* [CP] Check Pods Manifest.lock */,
+				D8A874FFBAE1C48E85417C62 /* [CP] Check Pods Manifest.lock */,
 				A273FA092A30995D004474A4 /* Sources */,
 				A273FA0A2A30995D004474A4 /* Frameworks */,
 				A273FA0B2A30995D004474A4 /* Resources */,
-				F69EB7990617B95AC8EFA504 /* [CP] Embed Pods Frameworks */,
+				F41F0BCCB6CCC8C8E8F6FFA5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -154,6 +160,9 @@
 				Base,
 			);
 			mainGroup = A273FA042A30995D004474A4;
+			packageReferences = (
+				A2BB991C2A4482540023C35D /* XCRemoteSwiftPackageReference "swift-async-algorithms.git" */,
+			);
 			productRefGroup = A273FA0E2A30995D004474A4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -176,7 +185,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0E6D5175AE093F9338CD9862 /* [CP] Check Pods Manifest.lock */ = {
+		D8A874FFBAE1C48E85417C62 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -198,7 +207,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F69EB7990617B95AC8EFA504 /* [CP] Embed Pods Frameworks */ = {
+		F41F0BCCB6CCC8C8E8F6FFA5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -222,6 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2BB991B2A44805A0023C35D /* SpendingModel.swift in Sources */,
+				A2BB99192A3CFC950023C35D /* FinanceCell.swift in Sources */,
 				A273FA152A30995D004474A4 /* ExpensesViewController.swift in Sources */,
 				A273FA112A30995D004474A4 /* AppDelegate.swift in Sources */,
 				A273FA132A30995D004474A4 /* SceneDelegate.swift in Sources */,
@@ -362,7 +373,7 @@
 		};
 		A273FA222A309960004474A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A536B2966CD6BD01A66580B2 /* Pods-AccautingOfFinances.debug.xcconfig */;
+			baseConfigurationReference = 2914E9A5D0B2501A0A933ED8 /* Pods-AccautingOfFinances.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -394,7 +405,7 @@
 		};
 		A273FA232A309960004474A4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 288D7CF0C46B2D0EA63DDA91 /* Pods-AccautingOfFinances.release.xcconfig */;
+			baseConfigurationReference = 83C7E3BCCC06B50951217E7A /* Pods-AccautingOfFinances.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -446,6 +457,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A2BB991C2A4482540023C35D /* XCRemoteSwiftPackageReference "swift-async-algorithms.git" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = A273FA052A30995D004474A4 /* Project object */;
 }

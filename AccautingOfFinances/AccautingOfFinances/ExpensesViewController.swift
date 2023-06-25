@@ -7,10 +7,16 @@
 
 import UIKit
 import SnapKit
-
+import RealmSwift
 class ExpensesViewController: UIViewController {
-
+    let realm = try! Realm()
+    var spandingArray:Results<Spending>!
+    
+    let tableView: UITableView = .init()
+    
     var stillTyping = false
+    var categoryName = ""
+    var displayValue: Int = 1
     let uiView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 20
@@ -176,6 +182,7 @@ class ExpensesViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.backgroundColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 0.2)
 //        button.backgroundColor = UIColor.systemGray
+        
         return button
     }()
     let expensesLabel: UILabel = {
@@ -320,6 +327,7 @@ class ExpensesViewController: UIViewController {
     }
 
     func initialize(){
+        spandingArray = realm.objects(Spending.self )
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.title = "Путь к миллиону"
         view.backgroundColor = .black
@@ -480,23 +488,86 @@ class ExpensesViewController: UIViewController {
             make.leading.equalToSuperview().inset(UIConstant.buttonCategorylInset)
             make.top.equalTo(expensesStack.snp.bottom).offset(UIConstant.buttonCategoryTopOffset)
         }
+        tableView.register(FinanceCell.self, forCellReuseIdentifier: "FinanceCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .black
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(buttonCategoryStack.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
     @objc func enteringnumbers(_ number:UIButton){
         let number = number.currentTitle
-        if stillTyping {
-            if let enterCount = enterLabel.text?.count, enterCount < 10 {
-                enterLabel.text = enterLabel.text! + (number ?? "nil")
-            } } else {
-                enterLabel.text = number
-                stillTyping = true
-            }
-        }
+        if number == "0" && enterLabel.text == "0"{
+            stillTyping = false
+        } else {
+            if stillTyping {
+                if let enterCount = enterLabel.text?.count, enterCount < 10 {
+                    enterLabel.text = enterLabel.text! + (number ?? "nil")
+                } } else {
+                    enterLabel.text = number
+                    stillTyping = true
+                }
+        } }
     @objc func cancelNumbers(_ number:UIButton){
         enterLabel.text = "0"
         stillTyping = false
     }
     @objc func categoryPressed(_ category: UIButton){
-        
+        categoryName = category.currentTitle ?? "nil"
+        displayValue = Int(enterLabel.text ?? "nil") ?? 1
+        enterLabel.text = "0"
+        stillTyping = false
+        //проверка
+        let value = Spending(value: ["\(categoryName)", displayValue])
+        try! realm.write {
+            realm.add(value)
+        }
+        tableView.reloadData() // после нажатия, таблица и база данных обновляется
     }
 }
 
+extension ExpensesViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return spandingArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FinanceCell", for: indexPath) as? FinanceCell else {fatalError()}
+        let spending = spandingArray[indexPath.row]
+        cell.categoryName.text = spending.category
+        cell.sumName.text = String(spending.cost)
+        switch spending.category{
+        case "Еда": cell.categoryImage.image = UIImage(named: "eat")
+        case "Кальян": cell.categoryImage.image = UIImage(named: "hookah")
+        case "Уход": cell.categoryImage.image = UIImage(named: "barber")
+        case "Авто": cell.categoryImage.image = UIImage(named: "car")
+        case "ЖКУ": cell.categoryImage.image = UIImage(named: "gku")
+        case "Досуг": cell.categoryImage.image = UIImage(named: "dosug")
+        default: break
+        }
+        return cell
+    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = delereActions(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+    func delereActions(at indexPath: IndexPath) -> UIContextualAction {
+        let editingRow = spandingArray[indexPath.row]
+        let array = spandingArray
+        let delete = UIContextualAction(style: .destructive, title: "Удалить") { delete, view, completion in
+            try! self.realm.write {
+                self.realm.delete(editingRow)
+            }
+            self.tableView.deleteRows(at: [indexPath] , with: .automatic)
+            completion(true)
+        }
+        return delete
+    }
+    
+    
+}
