@@ -21,7 +21,7 @@ class ExpensesViewController: UIViewController {
         let view = UIView()
         view.layer.cornerRadius = 20
         view.backgroundColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 0.2)
-//        view.backgroundColor = .gray
+        //        view.backgroundColor = .gray
         return view
     }()
     let enterLabel: UILabel = {
@@ -181,10 +181,11 @@ class ExpensesViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = UIColor(red: 190/255, green: 190/255, blue: 190/255, alpha: 0.2)
-//        button.backgroundColor = UIColor.systemGray
-        
+        //        button.backgroundColor = UIColor.systemGray
+        button.addTarget(self, action: #selector(appLimit(_:)), for: .touchUpInside)
         return button
     }()
+    
     let expensesLabel: UILabel = {
         let label = UILabel()
         label.text = "Все расходы:"
@@ -318,15 +319,16 @@ class ExpensesViewController: UIViewController {
         static let cancelHeight: CGFloat = 125
         static let buttonCategoryTopOffset: CGFloat = 20
         static let buttonCategorylInset: CGFloat = 0
-
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       initialize()
+        initialize()
     }
-
+    
     func initialize(){
+        leftLabel()
         spandingArray = realm.objects(Spending.self )
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.title = "Путь к миллиону"
@@ -340,7 +342,7 @@ class ExpensesViewController: UIViewController {
         }
         uiView.addSubview(enterLabel)
         enterLabel.snp.makeConstraints { make in
-//            make.top.equalToSuperview().inset(UIConstant.topEnterLabInset)
+            //            make.top.equalToSuperview().inset(UIConstant.topEnterLabInset)
             make.center.equalToSuperview()
             make.width.equalTo(300)
             make.height.equalTo(UIConstant.heightEnterLabel)
@@ -470,11 +472,11 @@ class ExpensesViewController: UIViewController {
             make.leading.equalToSuperview().inset(UIConstant.labelInset)
             make.top.equalTo(wastesStack.snp.bottom).offset(UIConstant.topExpenseesInset)
         }
-//        eatButton.snp.makeConstraints { make in
-//            make.width.equalTo(75)
-////            make.height.equalTo(70)
-//        }
-      let buttonCategoryStack = UIStackView()
+        //        eatButton.snp.makeConstraints { make in
+        //            make.width.equalTo(75)
+        ////            make.height.equalTo(70)
+        //        }
+        let buttonCategoryStack = UIStackView()
         buttonCategoryStack.axis = .horizontal
         buttonCategoryStack.spacing = -12
         buttonCategoryStack.addArrangedSubview(eatButton)
@@ -529,45 +531,97 @@ class ExpensesViewController: UIViewController {
         }
         tableView.reloadData() // после нажатия, таблица и база данных обновляется
     }
+    @objc func appLimit(_ number: UIButton){
+        let alert = UIAlertController(title: "Установить лимит", message: "Ваш лимит", preferredStyle: .alert)
+        let action = UIAlertAction(title:"Ок", style: .default) {_ in
+            let sumDay = alert.textFields?[1].text
+            let sumMoney = alert.textFields?[0].text
+            self.limitValueLabel.text = sumDay
+            guard sumDay != "" else {return}
+            if let day = sumDay {
+                let dateNow = Date() // записываем время на момент нажатия кнопки
+                let lastDay: Date = dateNow.addingTimeInterval(60*60*24*Double(day)!) //прибавляем интервал в днях, который указал пользователь
+
+                let limit = self.realm.objects(Limit.self) // переменная которая содержит все значения БД ЛИМИТ
+                if limit.isEmpty { //если бд пустая
+                    let value = Limit(value: [self.limitValueLabel.text!, dateNow, lastDay])
+                    try! self.realm.write {
+                        self.realm.add(value)
+                    }
+                } else { // перезаписываем данные
+                    try! self.realm.write{
+                        limit[0].limitSum = self.limitValueLabel.text!
+                        limit[0].limitDay = dateNow as Date
+                        limit[0].limitLastDay = lastDay as Date
+                    }
+                }
+            }
+        }
+            let actionCancel = UIAlertAction(title:"Отмена", style: .cancel) {_ in
+            }
+            alert.addTextField { textField in
+                textField.placeholder = "Введите сумму"
+                textField.keyboardType = .asciiCapableNumberPad
+            }
+            alert.addTextField { textField in
+                textField.placeholder = "Введите количество дней"
+                textField.keyboardType = .asciiCapableNumberPad
+            }
+            alert.addAction(actionCancel)
+            alert.addAction(action)
+            present(alert, animated: true)
+        }
+    
+    func leftLabel(){
+        let limit = self.realm.objects(Limit.self)
+        limitValueLabel.text = limit[0].limitSum
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let ferstDay = limit[0].limitDay
+        let lastDay = limit[0].limitLastDay
+        let ferstComponents = calendar.dateComponents([.year, .month, .day], from: ferstDay)
+        let lastComponents = calendar.dateComponents([.year, .month, .day], from: lastDay)
+        let startDate = formatter.date(from: "2023/06/27 00:00")
+    }
 }
 
-extension ExpensesViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return spandingArray.count
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FinanceCell", for: indexPath) as? FinanceCell else {fatalError()}
-        let spending = spandingArray[indexPath.row]
-        cell.categoryName.text = spending.category
-        cell.sumName.text = String(spending.cost)
-        switch spending.category{
-        case "Еда": cell.categoryImage.image = UIImage(named: "eat")
-        case "Кальян": cell.categoryImage.image = UIImage(named: "hookah")
-        case "Уход": cell.categoryImage.image = UIImage(named: "barber")
-        case "Авто": cell.categoryImage.image = UIImage(named: "car")
-        case "ЖКУ": cell.categoryImage.image = UIImage(named: "gku")
-        case "Досуг": cell.categoryImage.image = UIImage(named: "dosug")
-        default: break
+    extension ExpensesViewController: UITableViewDelegate, UITableViewDataSource {
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return spandingArray.count
         }
-        return cell
-    }
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = delereActions(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [delete])
-    }
-    func delereActions(at indexPath: IndexPath) -> UIContextualAction {
-        let editingRow = spandingArray[indexPath.row]
-        let array = spandingArray
-        let delete = UIContextualAction(style: .destructive, title: "Удалить") { delete, view, completion in
-            try! self.realm.write {
-                self.realm.delete(editingRow)
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "FinanceCell", for: indexPath) as? FinanceCell else {fatalError()}
+            let spending = spandingArray[indexPath.row]
+            cell.categoryName.text = spending.category
+            cell.sumName.text = String(spending.cost)
+            switch spending.category{
+            case "Еда": cell.categoryImage.image = UIImage(named: "eat")
+            case "Кальян": cell.categoryImage.image = UIImage(named: "hookah")
+            case "Уход": cell.categoryImage.image = UIImage(named: "barber")
+            case "Авто": cell.categoryImage.image = UIImage(named: "car")
+            case "ЖКУ": cell.categoryImage.image = UIImage(named: "gku")
+            case "Досуг": cell.categoryImage.image = UIImage(named: "dosug")
+            default: break
             }
-            self.tableView.deleteRows(at: [indexPath] , with: .automatic)
-            completion(true)
+            return cell
         }
-        return delete
+        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            let delete = delereActions(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [delete])
+        }
+        func delereActions(at indexPath: IndexPath) -> UIContextualAction {
+            let editingRow = spandingArray[indexPath.row]
+            let array = spandingArray
+            let delete = UIContextualAction(style: .destructive, title: "Удалить") { delete, view, completion in
+                try! self.realm.write {
+                    self.realm.delete(editingRow)
+                }
+                self.tableView.deleteRows(at: [indexPath] , with: .automatic)
+                completion(true)
+            }
+            return delete
+        }
     }
-    
-    
-}
