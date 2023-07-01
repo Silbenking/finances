@@ -329,6 +329,7 @@ class ExpensesViewController: UIViewController {
     
     func initialize(){
         leftLabel()
+        allSpendinf()
         spandingArray = realm.objects(Spending.self )
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.title = "Путь к миллиону"
@@ -529,15 +530,17 @@ class ExpensesViewController: UIViewController {
         try! realm.write {
             realm.add(value)
         }
+        leftLabel()
+        allSpendinf()
         tableView.reloadData() // после нажатия, таблица и база данных обновляется
     }
     @objc func appLimit(_ number: UIButton){
         let alert = UIAlertController(title: "Установить лимит", message: "Ваш лимит", preferredStyle: .alert)
         let action = UIAlertAction(title:"Ок", style: .default) {_ in
-            let sumDay = alert.textFields?[1].text
-            let sumMoney = alert.textFields?[0].text
+            let sumDay = alert.textFields?[0].text
+            let sumMoney = alert.textFields?[1].text
+            guard sumDay != "" && sumMoney != "" else {return}
             self.limitValueLabel.text = sumDay
-            guard sumDay != "" else {return}
             if let day = sumDay {
                 let dateNow = Date() // записываем время на момент нажатия кнопки
                 let lastDay: Date = dateNow.addingTimeInterval(60*60*24*Double(day)!) //прибавляем интервал в днях, который указал пользователь
@@ -556,6 +559,7 @@ class ExpensesViewController: UIViewController {
                     }
                 }
             }
+            self.leftLabel()
         }
             let actionCancel = UIAlertAction(title:"Отмена", style: .cancel) {_ in
             }
@@ -574,6 +578,7 @@ class ExpensesViewController: UIViewController {
     
     func leftLabel(){
         let limit = self.realm.objects(Limit.self)
+        guard limit.isEmpty == false else { return } //чтобы при первом запуске не вылетало, т.к. используем  [0]/ и пробуем настроить этот чертов гит!!!
         limitValueLabel.text = limit[0].limitSum
         let calendar = Calendar.current
         let formatter = DateFormatter()
@@ -582,7 +587,23 @@ class ExpensesViewController: UIViewController {
         let lastDay = limit[0].limitLastDay
         let ferstComponents = calendar.dateComponents([.year, .month, .day], from: ferstDay)
         let lastComponents = calendar.dateComponents([.year, .month, .day], from: lastDay)
-        let startDate = formatter.date(from: "2023/06/27 00:00")
+        let startDate = formatter.date(from: "\(ferstComponents.year!)/\(ferstComponents.month!)/\(ferstComponents.day!) 00:00")
+        let endDate = formatter.date(from: "\(lastComponents.year!)/\(lastComponents.month!)/\(lastComponents.day!) 23:59")
+
+        let filtredLimit: Int = realm.objects(Spending.self).filter("self.date >=%@ && self.date <= %@", startDate, endDate).sum(ofProperty: "cost") // выбираем предикат, то есть по каким условиям будем выбирать
+        wastesValueLabel.text = "\(filtredLimit)"
+        
+        let a = Int(limitValueLabel.text ?? "0") ?? 0
+        let b = Int(wastesValueLabel.text ?? "0") ?? 0
+        let c = a - b
+        
+        availableValueLabel.text = "\(c)"
+      
+    }
+    
+    func allSpendinf(){
+        let allSpend: Int = realm.objects(Spending.self).sum(ofProperty: "cost") //подсчет всех расходов
+        expensesValueLabel.text = "\(allSpend)"
     }
 }
 
@@ -594,7 +615,7 @@ class ExpensesViewController: UIViewController {
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "FinanceCell", for: indexPath) as? FinanceCell else {fatalError()}
-            let spending = spandingArray[indexPath.row]
+            let spending = spandingArray.sorted(byKeyPath: "date",ascending:false)[indexPath.row]
             cell.categoryName.text = spending.category
             cell.sumName.text = String(spending.cost)
             switch spending.category{
@@ -613,12 +634,14 @@ class ExpensesViewController: UIViewController {
             return UISwipeActionsConfiguration(actions: [delete])
         }
         func delereActions(at indexPath: IndexPath) -> UIContextualAction {
-            let editingRow = spandingArray[indexPath.row]
+            let editingRow = spandingArray.sorted(byKeyPath: "date",ascending:false)[indexPath.row]
             let array = spandingArray
             let delete = UIContextualAction(style: .destructive, title: "Удалить") { delete, view, completion in
                 try! self.realm.write {
                     self.realm.delete(editingRow)
                 }
+                self.leftLabel()
+                self.allSpendinf()
                 self.tableView.deleteRows(at: [indexPath] , with: .automatic)
                 completion(true)
             }
